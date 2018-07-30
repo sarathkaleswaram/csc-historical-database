@@ -1,0 +1,23 @@
+{
+    "logLevel": 3,
+    "logFile": null,
+    "ripple": {
+      "server": "wss://s1.ripple.com:443"
+    },    
+    "casinocoin" : {
+        "server" : "wss://ws01.casinocoin.org:4443"
+    },
+    "hbase" : {
+      "prefix" : "",
+      "servers" : [
+        {"host" : "", "port": 9090}
+      ]
+    },
+    "hbase-rest" : {
+      "prefix" : "",
+      "host"   : "",
+      "port"   : 8080
+    },
+    "validators-config" : "validators.config.json.example"
+  }
+  
