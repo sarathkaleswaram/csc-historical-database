@@ -26,7 +26,6 @@ node_modules
 
 eslintrc
 .idea
-config/*config.json
 .DS_Store
 storm/target
 storm/local/target
