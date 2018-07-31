@@ -18,6 +18,9 @@
       "host"   : "",
       "port"   : 8080
     },
+    "startIndex" : 84702,
+    "stopIndex" : 84700,
+    "force" : true,
     "validators-config" : "validators.config.json.example"
   }
   
