@@ -141,7 +141,7 @@ function Server(options) {
 
   // start the server
   server = app.listen(options.port)
-  console.log('Ripple Data API running on port: ' + options.port)
+  console.log('CasinoCoin Data API running on port: ' + options.port)
 
   // log error
   server.on('error', function(err) {
