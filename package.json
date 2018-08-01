@@ -1,7 +1,7 @@
 {
-  "name": "rippled-historical-database",
+  "name": "casinocoind-historical-database",
   "version": "2.3.3",
-  "description": "SQL database storing historical data from Rippled.",
+  "description": "SQL database storing historical data from Casinocoind.",
   "repository": {
     "type": "git",
     "url": "git://github.com/ripple/rippled-historical-database.git"

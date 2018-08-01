@@ -2,7 +2,7 @@
 
 var packageJSON = require('../package.json')
 function generateMap(url) {
-  var repo = 'https://github.com/ripple/rippled-historical-database'
+  var repo = 'github.com/sarathkaleswaram/shar-historical-database'
   return {
     'name': packageJSON.name,
     'version': packageJSON.version,
@@ -13,52 +13,52 @@ function generateMap(url) {
         action: 'Get Account Transactions',
         route: '/v2/accounts/{:address}/transactions',
         example: url + '/accounts/' +
-          'r3kmLJN5D28dHuH8vZNUZpMC43pEHpaocV/transactions'
+          'cDarPNJEpCnpBZSfmcquydockkePkjPGA2/transactions'
       }, {
         action: 'Get Account Transactions By Sequence',
         route: '/v2/accounts/{:address}/transactions/{:sequence}',
         example: url + '/accounts/' +
-          'r3kmLJN5D28dHuH8vZNUZpMC43pEHpaocV/transactions/112'
+          'cDarPNJEpCnpBZSfmcquydockkePkjPGA2/transactions/112'
       }, {
         action: 'Get Account Payments',
         route: '/v2/accounts/{:address}/payments',
         example: url + '/accounts/' +
-          'r3kmLJN5D28dHuH8vZNUZpMC43pEHpaocV/payments'
+          'cDarPNJEpCnpBZSfmcquydockkePkjPGA2/payments'
       }, {
         action: 'Get Account Exchanges',
         route: '/v2/accounts/{:address}/exchanges',
         example: url + '/accounts/' +
-          'rQaxmmRMasgt1edq8pfJKCfbkEiSp5FqXJ/exchanges'
+          'cDarPNJEpCnpBZSfmcquydockkePkjPGA2/exchanges'
       }, {
         action: 'Get Account Balance Changes',
         route: '/v2/accounts/{:address}/balance_changes',
         example: url + '/accounts/' +
-          'r3kmLJN5D28dHuH8vZNUZpMC43pEHpaocV/balance_changes'
+          'cDarPNJEpCnpBZSfmcquydockkePkjPGA2/balance_changes'
       }, {
         action: 'Get Account Reports',
         route: '/v2/accounts/{:address}/reports/{:date}',
         example: url + '/accounts/' +
-          'r3kmLJN5D28dHuH8vZNUZpMC43pEHpaocV/reports/2013-02-01'
+          'cDarPNJEpCnpBZSfmcquydockkePkjPGA2/reports/2013-02-01'
       }, {
         action: 'Get Account Balances',
         route: '/v2/accounts/{:address}/balances',
         example: url + '/accounts/' +
-          'r3kmLJN5D28dHuH8vZNUZpMC43pEHpaocV/balances'
+          'cDarPNJEpCnpBZSfmcquydockkePkjPGA2/balances'
       }, {
         action: 'Get Account Orders',
         route: '/v2/accounts/{:address}/orders',
         example: url + '/accounts/' +
-          'r3kmLJN5D28dHuH8vZNUZpMC43pEHpaocV/orders'
+          'cDarPNJEpCnpBZSfmcquydockkePkjPGA2/orders'
       }, {
         action: 'Get Account Transaction Stats',
         route: '/v2/accounts/{:address}/stats/transactions',
         example: url + '/accounts/' +
-          'r3kmLJN5D28dHuH8vZNUZpMC43pEHpaocV/stats/transactions'
+          'cDarPNJEpCnpBZSfmcquydockkePkjPGA2/stats/transactions'
       }, {
         action: 'Get Account Value Stats',
         route: '/v2/accounts/{:address}/stats/value',
         example: url + '/accounts/' +
-          'r3kmLJN5D28dHuH8vZNUZpMC43pEHpaocV/stats/value'
+          'cDarPNJEpCnpBZSfmcquydockkePkjPGA2/stats/value'
       }, {
         action: 'Get Account',
         route: '/v2/accounts/{:address}',
@@ -66,7 +66,7 @@ function generateMap(url) {
       }, {
         action: 'Get Accounts',
         route: '/v2/accounts',
-        example: url + '/accounts?parent=r3kmLJN5D28dHuH8vZNUZpMC43pEHpaocV'
+        example: url + '/accounts?parent=cDarPNJEpCnpBZSfmcquydockkePkjPGA2'
       }, {
         action: 'Get Ledgers',
         route: '/v2/ledgers/{:ledger_hash/ledger_index/date}',
@@ -79,25 +79,25 @@ function generateMap(url) {
         action: 'Get Transaction',
         route: '/v2/transactions/{:tx_hash}',
         example: url + '/transactions/' +
-        '3B1A4E1C9BB6A7208EB146BCDB86ECEA6068ED01466D933528CA2B4C64F753EF'
+        'D1FCBD3B29EA436D98048E5C289B0CD0B7102FD69C3C40AE03796A7926049C88'
       }, {
         action: 'Get Payments',
         route: '/v2/payments/{:currency+issuer}',
-        example: url + '/payments/USD+rvYAfWj5gh67oV6fW32ZzP3Aw4Eubs59B'
+        example: url + '/payments/USD+cDarPNJEpCnpBZSfmcquydockkePkjPGA2'
       }, {
         action: 'Get Exchanges',
         route: '/v2/exchanges/{:base}/{:counter}',
-        example: url + '/exchanges/XRP/USD+rvYAfWj5gh67oV6fW32ZzP3Aw4Eubs59B'
+        example: url + '/exchanges/XRP/USD+cDarPNJEpCnpBZSfmcquydockkePkjPGA2'
       }, {
         action: 'Get Capitalization',
         route: '/v2/capitalization/{:currency+issuer}',
         example: url + '/capitalization/' +
-          'USD+rvYAfWj5gh67oV6fW32ZzP3Aw4Eubs59B'
+          'USD+cDarPNJEpCnpBZSfmcquydockkePkjPGA2'
       }, {
         action: 'Get Active Accounts',
         route: '/v2/active_accounts/{:base}/{:counter}',
         example: url + '/active_accounts/XRP/' +
-          'USD+rvYAfWj5gh67oV6fW32ZzP3Aw4Eubs59B'
+          'USD+cDarPNJEpCnpBZSfmcquydockkePkjPGA2'
       }, {
         action: 'Get Exchange Volume',
         route: '/v2/network/exchange_volume',
@@ -178,13 +178,13 @@ function generateMap(url) {
         action: 'Get Exchange Rate',
         route: '/v2/exchange_rates/{:base}/{:counter}',
         example: url + '/exchange_rates/XRP/' +
-          'USD+rvYAfWj5gh67oV6fW32ZzP3Aw4Eubs59B'
+          'USD+cDarPNJEpCnpBZSfmcquydockkePkjPGA2'
       }, {
         action: 'Normalize Amount',
         route: '/v2/normalize',
         example: url + '/normalize?amount=2000&currency=XRP' +
           '&exchange_currency=USD' +
-          '&exchange_issuer=rvYAfWj5gh67oV6fW32ZzP3Aw4Eubs59B'
+          '&exchange_issuer=cDarPNJEpCnpBZSfmcquydockkePkjPGA2'
       }, {
         action: 'Get Daily Summary',
         route: '/v2/reports/{:date}',

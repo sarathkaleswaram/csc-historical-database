@@ -128,6 +128,7 @@ var accountTransactions = function (req, res) {
   log.info('ACCOUNT TX:', options.account);
 
   hbase.getAccountTransactions(options, function(err, resp) {
+    console.log(err,resp)
     if (err) {
       errorResponse(err);
     } else {
@@ -163,6 +164,7 @@ var accountTransactions = function (req, res) {
   */
   function successResponse (resp) {
     var result = {result : 'success'};
+    console.log(resp.rows);
     var rows = resp.rows || [];
 
     if (resp.marker) {
