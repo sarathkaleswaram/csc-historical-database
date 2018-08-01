@@ -163,7 +163,7 @@ var accountTransactions = function (req, res) {
   */
   function successResponse (resp) {
     var result = {result : 'success'};
-    console.log(resp.rows);
+    console.log(resp.rows, 'successResponse');
     var rows = resp.rows || [];
 
     if (resp.marker) {
