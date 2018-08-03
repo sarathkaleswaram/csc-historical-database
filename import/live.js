@@ -18,6 +18,7 @@ importer.liveStream();
 log.info('Saving Ledgers to HBase');
 
 importer.on('ledger', function(ledger) {
+  console(ledger,'got ledger ---------------------')
   hbase.saveLedger(ledger, function(err, resp) {
     if (err) {
       log.error(err);
