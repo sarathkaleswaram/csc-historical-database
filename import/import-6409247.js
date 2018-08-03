@@ -35,8 +35,9 @@ var badTx = {
 }
 
 var binary = require('ripple-binary-codec');
-var HBase  = require('./client');
-var hbase  = new HBase();
+var hbase  = require('./client');
+var casinocoinAPI = require('./casinocoinApi');
+// var hbase  = new HBase();
 
 
 //form transactions for hash calc
@@ -47,7 +48,19 @@ ledger.transactions.forEach(function(tx, i) {
   ledger.transactions[i] = transaction;
 });
 
-hbase.saveLedger(ledger, function(err, resp) {
-  console.log(err, resp);
-  process.exit();
-});
+casinocoinAPI.getLedger({ ledgerVersion: 84702,
+    includeAllData: true,
+    includeTransactions: true })
+      .then(ledger => {
+        hbase.saveLedger(ledger, function(err, resp) {
+            console.log(err, resp);
+            process.exit();
+          })
+        }
+      )
+      .catch(function(e) {
+        log.error("error requesting ledger:", options.ledgerVersion, e);
+        setImmediate(retry, options, attempts, callback);
+      });
+
+
