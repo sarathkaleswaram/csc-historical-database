@@ -17,6 +17,7 @@ var Client = function () {
   self.saveLedger = function (ledger, callback) {
 
     var parsed = Parser.parseLedger(ledger);
+    console.log(parsed, 'parsed ------------------------------------');
 
     hbase.saveParsedData({data:parsed}, function(err, resp) {
       if (err) {
