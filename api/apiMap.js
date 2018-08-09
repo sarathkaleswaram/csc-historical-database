@@ -62,7 +62,7 @@ function generateMap(url) {
       }, {
         action: 'Get Account',
         route: '/v2/accounts/{:address}',
-        example: url + '/accounts/rB31eWvkfKBAu6FDD9zgnzT4RwSfXGcqPm'
+        example: url + '/accounts/cDarPNJEpCnpBZSfmcquydockkePkjPGA2'
       }, {
         action: 'Get Accounts',
         route: '/v2/accounts',

@@ -4,8 +4,10 @@ var Logger = require('../../lib/logger');
 var log = new Logger({scope : 'account balances'});
 var request = require('request');
 var smoment = require('../../lib/smoment');
-var rippleAddress = require('ripple-address-codec');
-var rippled = require('../../lib/rippled')
+// var rippleAddress = require('ripple-address-codec');
+// var rippled = require('../../lib/rippled')
+var casinocoinAddress = require('casinocoin-libjs-address-codec');
+var casinocoind = require('../../lib/casinocoind')
 var hbase = require('../../lib/hbase')
 
 var accountBalances = function (req, res, next) {
@@ -26,9 +28,9 @@ var accountBalances = function (req, res, next) {
     });
     return;
 
-  } else if (!rippleAddress.isValidAddress(options.account)) {
+  } else if (!casinocoinAddress.isValidAddress(options.account)) {
     errorResponse({
-      error: 'invalid ripple address',
+      error: 'invalid casinocoin address',
       code: 400
     });
     return;
@@ -68,7 +70,7 @@ var accountBalances = function (req, res, next) {
   }
 
   // if requesting latest ledger,
-  // add leeway to rippled request
+  // add leeway to casinocoind request
   // since it may not be perfectly
   // in sync
   if (!options.ledger_index &&
@@ -108,11 +110,11 @@ var accountBalances = function (req, res, next) {
   /**
   * getBalances
   * use ledger_index from getLedger api call
-  * to get balances using rippleAPI
+  * to get balances using casinocoinAPI
   */
 
   function getBalances(opts) {
-    rippled.getBalances({
+    casinocoind.getBalances({
       account: opts.account,
       ledger: opts.ledger_index,
       limit: opts.limit,

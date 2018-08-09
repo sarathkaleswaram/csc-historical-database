@@ -5,7 +5,8 @@ var Logger = require('../../lib/logger');
 var log = new Logger({scope : 'account orders'});
 var request = require('request');
 var smoment = require('../../lib/smoment');
-var rippled = require('../../lib/rippled')
+// var rippled = require('../../lib/rippled')
+var casinocoind = require('../../lib/casinocoind')
 var hbase = require('../../lib/hbase')
 
 function accountOrders(req, res) {
@@ -60,7 +61,7 @@ function accountOrders(req, res) {
   }
 
   // if requesting latest ledger,
-  // add leeway to rippled request
+  // add leeway to casinocoind request
   // since it may not be perfectly
   // in sync
   if (!options.ledger_index &&
@@ -97,11 +98,11 @@ function accountOrders(req, res) {
   /**
   * getOrders
   * use ledger_index from getLedger api call
-  * to get orders using rippleAPI
+  * to get orders using casinocoinAPI
   */
 
   function getOrders(opts) {
-    rippled.getOrders({
+    casinocoind.getOrders({
       account: opts.account,
       ledger: opts.ledger_index,
       limit: opts.limit
