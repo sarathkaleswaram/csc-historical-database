@@ -5,7 +5,8 @@ var log = new Logger({scope: 'payments'})
 var smoment = require('../../lib/smoment')
 var utils = require('../../lib/utils')
 var intervals = ['day', 'week', 'month']
-var validator = require('ripple-address-codec')
+// var validator = require('ripple-address-codec')
+var validator = require('casinocoin-libjs-address-codec')
 var hbase = require('../../lib/hbase')
 
 function getPayments(req, res) {
@@ -103,7 +104,7 @@ function getPayments(req, res) {
     return
 
   } else if (options.currency &&
-             options.currency !== 'XRP' &&
+             options.currency !== 'CSC' &&
             !options.issuer) {
     errorResponse({error: 'issuer is required', code: 400})
     return

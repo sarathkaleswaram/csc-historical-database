@@ -5,7 +5,8 @@ var log = new Logger({scope: 'capitalization'});
 var smoment = require('../../lib/smoment');
 var utils = require('../../lib/utils');
 var intervals = ['day', 'week', 'month'];
-var validator = require('ripple-address-codec');
+// var validator = require('ripple-address-codec');
+var validator = require('casinocoin-libjs-address-codec');
 var hbase = require('../../lib/hbase')
 
 var getCapitalization = function (req, res, next) {
