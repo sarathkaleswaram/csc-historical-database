@@ -5,7 +5,7 @@
   "genesis_ledger": 1,
   "hbase" : {
     "logLevel" : 2,
-    "prefix" : "",
+    "prefix" : "test_",
     "servers" : [
       {"host" : "", "port": 9090}
     ]
@@ -14,7 +14,7 @@
     "server" : "wss://s1.ripple.com:443"
   },
   "casinocoin" : {
-    "server" : "wss://ws01.casinocoin.org:4443"
+    "server" : "ws://wst02.casinocoin.org:7007"
   },
   "cacheControl": {
     "max-age": 10,
@@ -22,7 +22,7 @@
     "stale-if-error": 300
   },
   "hbase-rest" : {
-    "prefix" : "",
+    "prefix" : "test_",
     "host"   : "",
     "port"   : 8080
   },
