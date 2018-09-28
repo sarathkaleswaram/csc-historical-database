@@ -1,10 +1,10 @@
 package ripple.importer;
 
-import backtype.storm.Config;
-import backtype.storm.topology.TopologyBuilder;
-import backtype.storm.LocalCluster;
-import backtype.storm.StormSubmitter;
-import backtype.storm.tuple.Fields;
+import org.apache.storm.Config;
+import org.apache.storm.StormSubmitter;
+import org.apache.storm.topology.TopologyBuilder;
+import org.apache.storm.LocalCluster;
+import org.apache.storm.tuple.Fields;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -65,10 +65,16 @@ public class ImportTopology {
       StormSubmitter.submitTopologyWithProgressBar(args[0], conf, builder.createTopology());
 
     } else {
-
-      conf.setDebug(false);
       LocalCluster cluster = new LocalCluster();
-      cluster.submitTopology("ledger-import", conf, builder.createTopology());
+      try {
+        conf.setDebug(false);
+        cluster.submitTopology("ledger-import", conf, builder.createTopology());
+        System.out.println(" ledger-import ------------------------------------");
+        Thread.sleep(10000);
+      } catch (Exception e) {
+          e.printStackTrace();
+     }    
     }
   }
 }
+
