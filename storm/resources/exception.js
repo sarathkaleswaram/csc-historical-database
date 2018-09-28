@@ -28,7 +28,7 @@ function notify(message, callback) {
  */
 
 function killTopology() {
-  exec('storm kill "ripple-ledger-importer"',
+  exec('storm kill "casinocoin-ledger-importer"',
        function callback(e, stdout, stderr) {
     if (e) {
       log.error(e);

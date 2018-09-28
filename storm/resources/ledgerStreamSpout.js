@@ -27,7 +27,7 @@ require('./exception')(log)
  */
 
 function killTopology() {
-  exec('storm kill "ripple-ledger-importer" -w 0',
+  exec('storm kill "casinocoin-ledger-importer" -w 0',
   function callback(e, stdout, stderr) {
     if (e) {
       log.error(e)
