@@ -175,9 +175,10 @@ function getAllExchanges() {
         timeout: timeout
     }).then(function(resp) {
         console.log(resp, '------------------getAllExchanges')
-        console.log(Number(r.buy), '------------------number')
         var results = []
         resp.forEach(function(r) {
+            console.log(Number(r.buy), '------------------number')
+            console.log(round(r.buy, 8), '------------------number')
             results.push({
                 date: smoment(r.creationDate).format(),
                 source: r.name,
@@ -194,11 +195,11 @@ function getAllExchanges() {
             })
         })
 
-        console.log(r.name, results.length)
+        console.log('all exchanges length', results.length)
         return results
     })
     .catch(function(e) {
-        console.log(r.name, e)
+        console.log('Error: ', e)
     })
 }
 
