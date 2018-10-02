@@ -112,63 +112,12 @@ function getNlexch(currency) {
   }
 
 /**
- * save
+ * getCfinex
  */
 
-function save(data) {
-    console.log(data,'----------------save')
-    // process.exit()
-  
-    var rows = {}
-    data.forEach(function(rowset) {
-      if (!rowset) {
-        return
-      }
-  
-      rowset.forEach(function(r) {
-        var date = smoment(r.date)
-        var rowkey = r.source + '|' +
-          r.base_currency + '|' +
-          r.counter_currency + '|' +
-          r.interval + '|' +
-          date.hbaseFormatStartRow()
-  
-        rows[rowkey] = {
-          'f:date': r.date,
-          'f:source': r.source,
-          'f:interval': r.interval,
-          'f:base_currency': r.base_currency,
-          'f:counter_currency': r.counter_currency,
-          base_volume: r.base_volume,
-          counter_volume: r.counter_volume,
-          open: r.open,
-          high: r.high,
-          low: r.low,
-          close: r.close,
-          vwap: r.vwap,
-          count: r.count,
-          buy_count: r.buy_count,
-          sell_count: r.sell_count,
-          buy_volume: r.buy_volume,
-          sell_volume: r.sell_volume
-        }
-      })
-    })
-  
-    console.log('saving ' + Object.keys(rows).length + ' rows')
-    return hbase.putRows({
-      table: table,
-      rows: rows
-    })
-}
+function getCfinex() {
 
-/**
- * getKorbit
- */
-
-function getKorbit() {
-
-  var url = 'https://api.korbit.co.kr/v1/transactions?currency_pair=xrp_krw'
+  var url = 'https://cfinex.com/api/tickerapi'
 
   return request({
     url: url,
@@ -178,6 +127,7 @@ function getKorbit() {
       time: 'hour'
     }
   }).then(function(resp) {
+    console.log(resp.CSC_BTC, resp.CSC_TUSD, '----------------getCfinex')
     var buckets = {}
 
     resp.forEach(function(d) {
@@ -239,9 +189,60 @@ function getKorbit() {
   })
 }
 
+/**
+ * save
+ */
+
+function save(data) {
+    console.log(data, '-------------------save')
+    // process.exit()
+  
+    var rows = {}
+    data.forEach(function(rowset) {
+      if (!rowset) {
+        return
+      }
+  
+      rowset.forEach(function(r) {
+        var date = smoment(r.date)
+        var rowkey = r.source + '|' +
+          r.base_currency + '|' +
+          r.counter_currency + '|' +
+          r.interval + '|' +
+          date.hbaseFormatStartRow()
+  
+        rows[rowkey] = {
+          'f:date': r.date,
+          'f:source': r.source,
+          'f:interval': r.interval,
+          'f:base_currency': r.base_currency,
+          'f:counter_currency': r.counter_currency,
+          base_volume: r.base_volume,
+          counter_volume: r.counter_volume,
+          open: r.open,
+          high: r.high,
+          low: r.low,
+          close: r.close,
+          vwap: r.vwap,
+          count: r.count,
+          buy_count: r.buy_count,
+          sell_count: r.sell_count,
+          buy_volume: r.buy_volume,
+          sell_volume: r.sell_volume
+        }
+      })
+    })
+  
+    console.log('saving ' + Object.keys(rows).length + ' rows')
+    return hbase.putRows({
+      table: table,
+      rows: rows
+    })
+}
+
 Promise.all([
     getNlexch('USD'),
-    getKorbit()
+    getCfinex()
 ])
 .then(save)
 .then(function() {

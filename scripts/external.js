@@ -63,6 +63,7 @@ function getBitstamp(currency) {
       time: 'hour'
     }
   }).then(function(resp) {
+    console.log(resp, '------------------getBitstamp')
     var buckets = {}
 
     resp.forEach(function(d) {
@@ -152,6 +153,7 @@ function getKorbit() {
       time: 'hour'
     }
   }).then(function(resp) {
+    console.log(resp, '------------------getKorbit')
     var buckets = {}
 
     resp.forEach(function(d) {
@@ -230,6 +232,7 @@ function getBithumb() {
       count: 100
     }
   }).then(function(resp) {
+    console.log(resp, '------------------getBithumb')
     var buckets = {}
 
     resp.data.forEach(function(d) {
@@ -321,6 +324,7 @@ function getBtcxIndia() {
     timeout: timeout
   })
   .then(function(resp) {
+    console.log(resp, '------------------getBtcxIndia')
     var buckets = {}
 
     resp.forEach(function(d) {
@@ -396,6 +400,7 @@ function getBitbank() {
     timeout: timeout
   })
   .then(function(resp) {
+    console.log(resp, '------------------getBitbank')
     var buckets = {}
 
     resp.data.transactions.forEach(function(d) {
@@ -484,6 +489,7 @@ function getBitfinex(currency) {
     json: true,
     timeout: timeout
   }).then(function(resp) {
+    console.log(resp, '------------------getBitfinex')
     var buckets = {}
 
     resp.forEach(function(d) {
@@ -576,6 +582,7 @@ function getBitso(currency) {
       limit: 100
     }
   }).then(function(resp) {
+    console.log(resp, '------------------getBitso')
     var buckets = {}
 
     resp.payload.forEach(function(d) {
@@ -666,7 +673,7 @@ function getCoinone() {
       period: 'hour'
     }
   }).then(function(resp) {
-
+    console.log(resp, '------------------getCoinone')
     var buckets = {}
 
     resp.completeOrders.forEach(function(d) {
@@ -748,7 +755,7 @@ function getCoincheck() {
       v2: true
     }
   }).then(function(resp) {
-
+    console.log(resp, '------------------getCoincheck')
     var results = []
 
     resp.forEach(function(r) {
@@ -801,6 +808,7 @@ function getBTC38(currency) {
       step: 300
     }
   }).then(function(resp) {
+    console.log(resp, '------------------getBTC38')
     var results = []
 
     resp.forEach(function(r) {
@@ -856,7 +864,7 @@ function getPoloniex(currency) {
     json: true,
     timeout: timeout
   }).then(function(resp) {
-
+    console.log(resp, '------------------getPoloniex')
     var results = []
     resp.forEach(function(r) {
 
@@ -900,7 +908,7 @@ function getJubi() {
     url: url,
     timeout: timeout
   }).then(function(resp) {
-
+    console.log(resp, '------------------getJubi')
     var results = []
     var data = resp.trim().substr(6, resp.length - 8)
 
@@ -950,6 +958,7 @@ function getKraken(currency) {
       interval: 5
     }
   }).then(function(resp) {
+    console.log(resp, '------------------getKraken')
     var results = []
 
     resp.result[pair].forEach(function(r) {
@@ -1002,6 +1011,7 @@ function getBittrex() {
       market: pair
     }
   }).then(function(resp) {
+    console.log(resp, '------------------getBittrex')
     var buckets = {}
 
     var data = {
