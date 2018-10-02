@@ -178,7 +178,7 @@ function getAllExchanges() {
         var results = []
         resp.forEach(function(r) {
             results.push({
-                date: smoment(r.creationDate).format(),
+                date: smoment(r.lastUpdateDate).format(),
                 source: r.name,
                 interval: '5minute',
                 base_currency: 'CSC',
@@ -201,6 +201,38 @@ function getAllExchanges() {
     .catch(function(e) {
         console.log('Error: ', e)
     })
+}
+
+/**
+ * reduce
+ */
+
+function reduce(data) {
+    var reduced = {
+      base_volume: 0,
+      counter_volume: 0,
+      count: 0
+    }
+  
+    data.forEach(function(d) {
+      reduced.base_volume += Number(d.base_volume || 0)
+      reduced.counter_volume += Number(d.counter_volume || 0)
+      reduced.count += Number(d.count || 0)
+    })
+  
+    if (!reduced.count) {
+      delete reduced.count
+    }
+  
+    if (reduced.counter_volume) {
+      reduced.vwap = reduced.counter_volume / reduced.base_volume
+      reduced.vwap = round(reduced.vwap, 6)
+  
+    } else {
+      delete reduced.counter_volume
+    }
+  
+    return reduced
 }
 
 /**
