@@ -170,17 +170,17 @@ function getAllExchanges() {
 
     var url = 'https://api.casinocoin.org/1.0.0/info/exchanges/all'
 
-    console.log(url,'----url')   
     return request({
         url: url,
         json: true,
         timeout: timeout
     }).then(function(resp) {
-        console.log(resp, '------------------getAllExchanges')
         var results = []
         resp.forEach(function(r) {
-            console.log(Number(r.but).toFixed(8).replace(/\.?0+$/,""), '------------------number')
-            console.log(Number(1e-7).toFixed(8), '------------------number')
+            console.log(Number(r.buy).toFixed(8).replace(/\.?0+$/,""), '------------------number')
+            console.log(Number(r.buy).toFixed(8), '------------------number')
+            console.log(Number(r.buy), '------------------number')
+            console.log(round(r.buy, 6), '------------------number')
             results.push({
                 date: smoment(r.creationDate).format(),
                 source: r.name,
@@ -326,9 +326,9 @@ function savePeriod(period, increment) {
       })
   
       console.log('saving: ' + label +
-                  ' ' + result.total + ' XRP')
+                  ' ' + result.total + ' CSC')
       return hbase.putRow({
-        table: 'test_agg_metrics',
+        table: 'agg_metrics',
         rowkey: 'trade_volume|external|live|' + label,
         columns: result
       })
