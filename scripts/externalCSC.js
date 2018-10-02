@@ -9,9 +9,9 @@ var table = 'agg_exchanges_external'
 var timeout = 8000
 
 var markets = [
-    'nlexch.com|CSC|BTC',
-    'cfinex.com|CSC|BTC',
-    'bitflip.li|CSC|BTC'
+    'NLExch|CSC|BTC',
+    'BitFlip|CSC|BTC',
+    'CFinex|CSC|BTC'
   ]
 /**
  * round
@@ -177,10 +177,6 @@ function getAllExchanges() {
     }).then(function(resp) {
         var results = []
         resp.forEach(function(r) {
-            console.log(Number(r.buy).toFixed(8).replace(/\.?0+$/,""), '------------------number')
-            console.log(Number(r.buy).toFixed(8), '------------------number')
-            console.log(Number(r.buy), '------------------number')
-            console.log(round(r.buy, 6), '------------------number')
             results.push({
                 date: smoment(r.creationDate).format(),
                 source: r.name,
@@ -189,8 +185,8 @@ function getAllExchanges() {
                 counter_currency: 'BTC',
                 base_volume: r.volume24H,
                 counter_volume: r.volume24H,
-                sell_volume: r.sell,
-                buy_volume: r.buy
+                sell_volume: Number(r.sell).toFixed(8),
+                buy_volume: Number(r.buy).toFixed(8)
                 // open: r.open,
                 // high: r.high,
                 // low: r.low,
@@ -211,14 +207,7 @@ function getAllExchanges() {
  * save
  */
 
-function save(data) {
-    var end = smoment()
-    var start = smoment()
-    console.log(data, '-------------------save')
-    console.log(start.hbaseFormatStartRow(), '-------------------start')
-    console.log(end.hbaseFormatStartRow(), '-------------------end')
-    // process.exit()
-  
+function save(data) {  
     var rows = {}
     data.forEach(function(rowset) {
       if (!rowset) {
@@ -278,6 +267,7 @@ function savePeriod(period, increment) {
       return new Promise(function(resolve, reject) {
         var startRow = m + '|5minute|' + start.hbaseFormatStartRow()
         var stopRow = m + '|5minute|' + end.hbaseFormatStopRow()
+        console.log(startRow, '------------', stopRow)
   
         hbase.getScan({
           table: table,
