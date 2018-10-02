@@ -35,10 +35,7 @@ function getNlexch(currency) {
     return request({
       url: url,
       json: true,
-      timeout: timeout,
-      qs: {
-        time: 'hour'
-      }
+      timeout: timeout
     }).then(function(resp) {
         console.log(resp, '----------------getNlexch')
       var buckets = {}
@@ -265,12 +262,6 @@ Promise.all([
     getBithumb()
 ])
 .then(save)
-.then(save5minute)
-.then(savePeriod.bind(this, 'hour', 1))
-.then(savePeriod.bind(this, 'day', 1))
-.then(savePeriod.bind(this, 'day', 3))
-.then(savePeriod.bind(this, 'day', 7))
-.then(savePeriod.bind(this, 'day', 30))
 .then(function() {
     console.log('success')
     process.exit(0)
