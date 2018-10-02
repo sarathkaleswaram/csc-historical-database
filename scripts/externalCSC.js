@@ -10,6 +10,8 @@ var timeout = 8000
 
 var markets = [
     'nlexch.com|CSC|BTC',
+    'cfinex.com|CSC|BTC',
+    'bitflip.li|CSC|BTC'
   ]
 /**
  * round
@@ -177,8 +179,8 @@ function getAllExchanges() {
         console.log(resp, '------------------getAllExchanges')
         var results = []
         resp.forEach(function(r) {
-            console.log(Number(r.buy), '------------------number')
-            console.log(round(r.buy, 8), '------------------number')
+            console.log(Number(r.but).toFixed(8).replace(/\.?0+$/,""), '------------------number')
+            console.log(Number(1e-7).toFixed(8), '------------------number')
             results.push({
                 date: smoment(r.creationDate).format(),
                 source: r.name,
@@ -187,6 +189,8 @@ function getAllExchanges() {
                 counter_currency: 'BTC',
                 base_volume: r.volume24H,
                 counter_volume: r.volume24H,
+                sell_volume: r.sell,
+                buy_volume: r.buy
                 // open: r.open,
                 // high: r.high,
                 // low: r.low,
@@ -208,7 +212,11 @@ function getAllExchanges() {
  */
 
 function save(data) {
+    var end = smoment()
+    var start = smoment()
     console.log(data, '-------------------save')
+    console.log(start.hbaseFormatStartRow(), '-------------------start')
+    console.log(end.hbaseFormatStartRow(), '-------------------end')
     // process.exit()
   
     var rows = {}
@@ -254,12 +262,90 @@ function save(data) {
     })
 }
 
+/**
+ * savePeriod
+ */
+
+function savePeriod(period, increment) {
+
+    var tasks = []
+    var end = smoment()
+    var start = smoment()
+    var label = (increment || '') + period
+  
+    // save single market
+    function saveMarket(m) {
+      return new Promise(function(resolve, reject) {
+        var startRow = m + '|5minute|' + start.hbaseFormatStartRow()
+        var stopRow = m + '|5minute|' + end.hbaseFormatStopRow()
+  
+        hbase.getScan({
+          table: table,
+          startRow: startRow,
+          stopRow: stopRow
+        }, function(err, resp) {
+          if (err) {
+            reject(err)
+  
+          } else if (!resp.length) {
+            console.log(m + ': no data')
+            resolve()
+  
+          } else {
+            var d = reduce(resp)
+            var parts = m.split('|')
+            d.source = parts[0]
+            d.base_currency = parts[1]
+            d.counter_currency = parts[2]
+            resolve(d)
+          }
+        })
+      })
+    }
+  
+    start.moment.subtract(increment || 1, period)
+  
+    markets.forEach(function(m) {
+      tasks.push(saveMarket(m))
+    })
+  
+    return Promise.all(tasks)
+    .then(function(components) {
+  
+      var result = {
+        components: components.filter(function(d) {
+          return Boolean(d)
+        }),
+        period: label,
+        total: 0,
+        date: end.format()
+      }
+  
+      result.components.forEach(function(d) {
+        result.total += d.base_volume
+      })
+  
+      console.log('saving: ' + label +
+                  ' ' + result.total + ' XRP')
+      return hbase.putRow({
+        table: 'test_agg_metrics',
+        rowkey: 'trade_volume|external|live|' + label,
+        columns: result
+      })
+    })
+}
+
 Promise.all([
     // getNlexch('USD'),
     // getCfinex(),
     getAllExchanges()
 ])
 .then(save)
+.then(savePeriod.bind(this, 'hour', 1))
+.then(savePeriod.bind(this, 'day', 1))
+.then(savePeriod.bind(this, 'day', 3))
+.then(savePeriod.bind(this, 'day', 7))
+.then(savePeriod.bind(this, 'day', 30))
 .then(function() {
     console.log('success')
     process.exit(0)
