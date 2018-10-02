@@ -55,6 +55,7 @@ function getBitstamp(currency) {
   var url = 'https://www.bitstamp.net/api/v2/transactions/' + pair
 
 
+  console.log(url,'----url')   
   return request({
     url: url,
     json: true,
@@ -63,7 +64,7 @@ function getBitstamp(currency) {
       time: 'hour'
     }
   }).then(function(resp) {
-    console.log(resp, '------------------getBitstamp')
+    // console.log(resp, '------------------getBitstamp')
     var buckets = {}
 
     resp.forEach(function(d) {
@@ -145,6 +146,7 @@ function getKorbit() {
 
   var url = 'https://api.korbit.co.kr/v1/transactions?currency_pair=xrp_krw'
 
+  console.log(url,'----url')   
   return request({
     url: url,
     json: true,
@@ -153,7 +155,7 @@ function getKorbit() {
       time: 'hour'
     }
   }).then(function(resp) {
-    console.log(resp, '------------------getKorbit')
+    // console.log(resp, '------------------getKorbit')
     var buckets = {}
 
     resp.forEach(function(d) {
@@ -224,6 +226,7 @@ function getBithumb() {
   var url = 'https://api.bithumb.com/public/recent_transactions/xrp'
 
 
+  console.log(url,'----url')   
   return request({
     url: url,
     json: true,
@@ -232,7 +235,7 @@ function getBithumb() {
       count: 100
     }
   }).then(function(resp) {
-    console.log(resp, '------------------getBithumb')
+    // console.log(resp, '------------------getBithumb')
     var buckets = {}
 
     resp.data.forEach(function(d) {
@@ -318,13 +321,14 @@ function getBtcxIndia() {
 
   var url = 'https://api.btcxindia.com/trades'
 
+  console.log(url,'----url')   
   return request({
     url: url,
     json: true,
     timeout: timeout
   })
   .then(function(resp) {
-    console.log(resp, '------------------getBtcxIndia')
+    // console.log(resp, '------------------getBtcxIndia')
     var buckets = {}
 
     resp.forEach(function(d) {
@@ -394,13 +398,14 @@ function getBitbank() {
 
   var url = 'https://public.bitbank.cc/xrp_jpy/transactions'
 
+  console.log(url,'----url')   
   return request({
     url: url,
     json: true,
     timeout: timeout
   })
   .then(function(resp) {
-    console.log(resp, '------------------getBitbank')
+    // console.log(resp, '------------------getBitbank')
     var buckets = {}
 
     resp.data.transactions.forEach(function(d) {
@@ -484,12 +489,13 @@ function getBitfinex(currency) {
   var url = 'https://api.bitfinex.com/v1/trades/'
 
 
+  console.log(url,'----url')   
   return request({
     url: url + pair,
     json: true,
     timeout: timeout
   }).then(function(resp) {
-    console.log(resp, '------------------getBitfinex')
+    // console.log(resp, '------------------getBitfinex')
     var buckets = {}
 
     resp.forEach(function(d) {
@@ -573,6 +579,7 @@ function getBitso(currency) {
   var url = 'https://api.bitso.com/v3/trades'
 
 
+  console.log(url,'----url')   
   return request({
     url: url,
     json: true,
@@ -582,7 +589,7 @@ function getBitso(currency) {
       limit: 100
     }
   }).then(function(resp) {
-    console.log(resp, '------------------getBitso')
+    // console.log(resp, '------------------getBitso')
     var buckets = {}
 
     resp.payload.forEach(function(d) {
@@ -664,6 +671,7 @@ function getCoinone() {
 
   var url = 'https://api.coinone.co.kr/trades'
 
+  console.log(url,'----url')   
   return request({
     url: url,
     json: true,
@@ -673,7 +681,7 @@ function getCoinone() {
       period: 'hour'
     }
   }).then(function(resp) {
-    console.log(resp, '------------------getCoinone')
+    // console.log(resp, '------------------getCoinone')
     var buckets = {}
 
     resp.completeOrders.forEach(function(d) {
@@ -743,6 +751,7 @@ function getCoincheck() {
 
   var url = 'https://coincheck.com/exchange/candle_rates'
 
+  console.log(url,'----url')   
   return request({
     url: url,
     json: true,
@@ -755,7 +764,7 @@ function getCoincheck() {
       v2: true
     }
   }).then(function(resp) {
-    console.log(resp, '------------------getCoincheck')
+    // console.log(resp, '------------------getCoincheck')
     var results = []
 
     resp.forEach(function(r) {
@@ -799,6 +808,7 @@ function getBTC38(currency) {
   var symbol = 'btc38xrp' + (currency === 'BTC' ?
       'btcbtc' : currency.toLowerCase())
 
+  console.log(url,'----url')   
   return request({
     url: url,
     json: true,
@@ -808,7 +818,7 @@ function getBTC38(currency) {
       step: 300
     }
   }).then(function(resp) {
-    console.log(resp, '------------------getBTC38')
+    // console.log(resp, '------------------getBTC38')
     var results = []
 
     resp.forEach(function(r) {
@@ -859,12 +869,13 @@ function getPoloniex(currency) {
     c = 'USD'
   }
 
+  console.log(url,'----url')   
   return request({
     url: url,
     json: true,
     timeout: timeout
   }).then(function(resp) {
-    console.log(resp, '------------------getPoloniex')
+    // console.log(resp, '------------------getPoloniex')
     var results = []
     resp.forEach(function(r) {
 
@@ -904,11 +915,12 @@ function getPoloniex(currency) {
 function getJubi() {
   var url = 'http://www.jubi.com/coin/xrp/k.js'
 
+  console.log(url,'----url')   
   return request({
     url: url,
     timeout: timeout
   }).then(function(resp) {
-    console.log(resp, '------------------getJubi')
+    // console.log(resp, '------------------getJubi')
     var results = []
     var data = resp.trim().substr(6, resp.length - 8)
 
@@ -949,6 +961,7 @@ function getKraken(currency) {
   var pair = 'XXRP' +
     (currency === 'BTC' ? 'XXBT' : 'Z' + currency)
 
+  console.log(url,'----url')   
   return request({
     url: url,
     json: true,
@@ -958,7 +971,7 @@ function getKraken(currency) {
       interval: 5
     }
   }).then(function(resp) {
-    console.log(resp, '------------------getKraken')
+    // console.log(resp, '------------------getKraken')
     var results = []
 
     resp.result[pair].forEach(function(r) {
@@ -1003,6 +1016,7 @@ function getBittrex() {
   var url = 'https://bittrex.com/api/v1.1/public/getmarkethistory'
   var pair = 'BTC-XRP'
 
+  console.log(url,'----url')   
   return request({
     url: url,
     json: true,
@@ -1011,7 +1025,7 @@ function getBittrex() {
       market: pair
     }
   }).then(function(resp) {
-    console.log(resp, '------------------getBittrex')
+    // console.log(resp, '------------------getBittrex')
     var buckets = {}
 
     var data = {
