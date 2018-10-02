@@ -28,88 +28,59 @@ function round(n, sig) {
 
 function getNlexch(currency) {
 
-    // var pair = ('xrp' + currency).toLowerCase()
-    var url = 'https://www.nlexch.com//api/v2/tickers/cscbtc'
-  
-  
+    var start = smoment()
+    var end = smoment()
+    var c = currency
+
+    start.moment.subtract(1, 'days')
+    var url = 'https://poloniex.com/public?' +
+        'command=returnChartData&currencyPair=' +
+        currency + '_XRP&period=300' +
+        '&start=' + start.moment.unix() +
+        '&end=' + end.moment.unix()
+
+    if (c === 'USDT') {
+        c = 'USD'
+    }
+
+    console.log(url,'----url')   
     return request({
-      url: url,
-      json: true,
-      timeout: timeout
+        url: url,
+        json: true,
+        timeout: timeout
     }).then(function(resp) {
-        console.log(resp, '----------------getNlexch')
-      var buckets = {}
-  
-      resp.forEach(function(d) {
-        var bucket = moment.unix(d.date).utc()
-        var price = Number(d.price)
-        var amount = Number(d.amount)
-  
-        bucket = bucket.startOf('minute')
-        .format('YYYY-MM-DDTHH:mm:ss[Z]')
-  
-        if (!buckets[bucket]) {
-          buckets[bucket] = {
-            base_volume: 0,
-            counter_volume: 0,
-            count: 0,
-            buy_volume: 0,
-            sell_volume: 0,
-            buy_count: 0,
-            sell_count: 0,
-            open: price,
-            high: price,
-            low: price,
-            close: price
-          }
+        // console.log(resp, '------------------getPoloniex')
+        var results = []
+        resp.forEach(function(r) {
+
+        // only include intervals with a trade
+        if (r.volume === 0) {
+            return
         }
-  
-        if (price > buckets[bucket].high) {
-          buckets[bucket].high = price
-        }
-  
-        if (price < buckets[bucket].low) {
-          buckets[bucket].low = price
-        }
-  
-  
-        buckets[bucket].close = price
-        buckets[bucket].base_volume += amount
-        buckets[bucket].counter_volume += amount * price
-        buckets[bucket].count++
-  
-        if (d.type === '1') {
-          buckets[bucket].sell_volume += amount
-          buckets[bucket].sell_count++
-        } else {
-          buckets[bucket].buy_volume += amount
-          buckets[bucket].buy_count++
-        }
-      })
-  
-      var results = Object.keys(buckets).map(function(key) {
-        var row = buckets[key]
-        row.source = 'bitstamp.net'
-        row.interval = '1minute'
-        row.base_currency = 'XRP'
-        row.counter_currency = currency
-        row.date = key
-        row.vwap = row.counter_volume / row.base_volume
-        row.vwap = round(row.vwap, 6)
-        return row
-      })
-  
-      // drop the oldest row,
-      // since we dont know if
-      // all exchanges were represented
-      results.pop()
-      console.log('bitstamp.net', currency, results.length)
-      return results
+
+        results.push({
+            date: smoment(r.date).format(),
+            source: 'poloniex.com',
+            interval: '5minute',
+            base_currency: 'XRP',
+            counter_currency: c,
+            base_volume: r.quoteVolume,
+            counter_volume: r.volume,
+            open: r.open,
+            high: r.high,
+            low: r.low,
+            close: r.close,
+            vwap: r.weightedAverage
+        })
+        })
+
+        console.log('poloniex.com', c, results.length)
+        return results
     })
     .catch(function(e) {
-      console.log('bitstamp error:', e)
+        console.log('polniex.com error:', c, e)
     })
-  }
+}
 
 /**
  * getCfinex
@@ -190,6 +161,48 @@ function getCfinex() {
 }
 
 /**
+ * getAllExchanges
+ */
+
+function getAllExchanges() {
+
+    var url = 'https://api.casinocoin.org/1.0.0/info/exchanges/all'
+
+    console.log(url,'----url')   
+    return request({
+        url: url,
+        json: true,
+        timeout: timeout
+    }).then(function(resp) {
+        console.log(resp, '------------------getAllExchanges')
+        console.log(Number(r.buy), '------------------number')
+        var results = []
+        resp.forEach(function(r) {
+            results.push({
+                date: smoment(r.creationDate).format(),
+                source: r.name,
+                interval: '5minute',
+                base_currency: 'CSC',
+                counter_currency: 'BTC',
+                base_volume: r.volume24H,
+                counter_volume: r.volume24H,
+                // open: r.open,
+                // high: r.high,
+                // low: r.low,
+                // close: r.close,
+                // vwap: r.weightedAverage
+            })
+        })
+
+        console.log(r.name, results.length)
+        return results
+    })
+    .catch(function(e) {
+        console.log(r.name, e)
+    })
+}
+
+/**
  * save
  */
 
@@ -241,8 +254,9 @@ function save(data) {
 }
 
 Promise.all([
-    getNlexch('USD'),
-    getCfinex()
+    // getNlexch('USD'),
+    // getCfinex(),
+    getAllExchanges()
 ])
 .then(save)
 .then(function() {
