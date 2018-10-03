@@ -44,14 +44,12 @@ function getNlexch(currency) {
     if (c === 'USDT') {
         c = 'USD'
     }
-
-    console.log(url,'----url')   
+ 
     return request({
         url: url,
         json: true,
         timeout: timeout
     }).then(function(resp) {
-        // console.log(resp, '------------------getPoloniex')
         var results = []
         resp.forEach(function(r) {
 
@@ -299,7 +297,6 @@ function savePeriod(period, increment) {
       return new Promise(function(resolve, reject) {
         var startRow = m + '|5minute|' + start.hbaseFormatStartRow()
         var stopRow = m + '|5minute|' + end.hbaseFormatStopRow()
-        console.log(startRow, '------------', stopRow)
   
         hbase.getScan({
           table: table,
