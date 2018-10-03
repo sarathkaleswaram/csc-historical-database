@@ -100,8 +100,8 @@ LedgerStreamSpout.prototype.nextTuple = function(done) {
   var id
 
   // process all ledgers
+  console.log(stream.ledgers.length, ' ---------------------- stream.ledgers.length')
   while (stream.ledgers.length) {
-    console.log(stream.ledgers.length, ' ---------------------- stream.ledgers.length')
     stream.processNextLedger(function(err, row) {
       console.log(err, row, ' ---------------------- err, row')
       if (err) {

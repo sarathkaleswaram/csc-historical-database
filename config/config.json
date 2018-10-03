@@ -34,7 +34,7 @@
     "port": 50070,
     "path": "/path/"
   },
-  "recipients": ["sarath.kaleswaram@blocmatrix.com","user@example.com"],
+  "recipients": ["sarath.kaleswaram@blocmatrix.com"],
   "rippleds_url": "https://data.ripple.com/v2/network/topology/nodes",
   "rateLimit": {
     "max": 60,
