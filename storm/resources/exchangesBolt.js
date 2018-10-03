@@ -28,6 +28,7 @@ ExchangesBolt.prototype.process = function(tup, done) {
   var self = this;
   var ex = tup.values[0];
   var pair = tup.values[1];
+  console.log(ex, '---------ex', pair,  '--------------- pair ExchangesBolt process')
 
   if (!pairs[pair]) {
     self.log('new pair: ' + pair);

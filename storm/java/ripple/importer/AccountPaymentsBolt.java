@@ -15,6 +15,7 @@ public class AccountPaymentsBolt extends ShellBolt implements IRichBolt {
 
   @Override
   public void declareOutputFields(OutputFieldsDeclarer declarer) {
+    System.out.println("declareOutputFields ------------------------------------ AccountPaymentsBolt ");
   }
 
   @Override

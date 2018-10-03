@@ -101,13 +101,16 @@ LedgerStreamSpout.prototype.nextTuple = function(done) {
 
   // process all ledgers
   while (stream.ledgers.length) {
+    console.log(stream.ledgers.length, ' ---------------------- stream.ledgers.length')
     stream.processNextLedger(function(err, row) {
+      console.log(err, row, ' ---------------------- err, row')
       if (err) {
         self.log(err)
         return
       }
 
       // emit fee summary
+      console.log(row.feeSummary, '------------ emit row.feeSummary')
       self.emit({
         tuple: [row.feeSummary],
         id: row.ledger.ledger_index + '.fs',
@@ -115,6 +118,7 @@ LedgerStreamSpout.prototype.nextTuple = function(done) {
       })
 
       // emit ledger header to HDFS
+      console.log(row.ledger, '------------ emit row.ledger')
       if (saveToHDFS) {
         self.emit({
           tuple: [row.ledger],
@@ -125,6 +129,7 @@ LedgerStreamSpout.prototype.nextTuple = function(done) {
 
       // if there are no transactions
       // just save the ledger
+      console.log(row.ledger.transactions.length,'-----------------row.ledger.transactions.length')
       if (!row.ledger.transactions.length) {
 
         stream.hbase.saveLedger(row.ledger, function(err2, resp) {
@@ -188,6 +193,7 @@ LedgerStreamSpout.prototype.nextTuple = function(done) {
       }
 
       // emit transaction
+      console.log(tx, '----------------- emit tx')
       self.emit({
         tuple: [tx],
         id: id,
@@ -213,6 +219,7 @@ LedgerStreamSpout.prototype.ack = function(id, done) {
   var data = self.pending[parts[0]]
   var total = 0
   var additional = 1 + saveToHDFS ? 1 : 0
+  console.log(id, '---------- id ', data, '--------- data   ack')
 
   // the ledger may already
   // have been removed because
@@ -236,6 +243,7 @@ LedgerStreamSpout.prototype.ack = function(id, done) {
   if (data.acks.length === total) {
 
     // increment ledger counter
+    console.log(data.ledger.close_time, ' data.ledger.close_time ', data.ledger.ledger_index, ' data.ledger.ledger_index ')
     self.emit({
       tuple: [{
         time: data.ledger.close_time,
@@ -282,6 +290,7 @@ LedgerStreamSpout.prototype.fail = function(id, done) {
   var data = this.pending[parts[0]]
   var txData = data && !isNaN(parts[1]) ? data.transactions[parts[1]] : null
   var max = 2
+  console.log(id, '---------- id ', data, '--------- data ', txData, '----------  txData fail')
 
   if (!data) {
     self.log('Received FAIL for - ' + id)
@@ -289,6 +298,7 @@ LedgerStreamSpout.prototype.fail = function(id, done) {
   } else if (txData && ++txData.attempts <= max) {
     self.log('Received FAIL for - ' + id +
              ' Retrying, attempt #' + txData.attempts)
+    console.log(txData.tx, ' ----------- txData.tx emit')
     self.emit({
       tuple: [txData.tx],
       id: id,

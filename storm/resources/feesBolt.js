@@ -25,6 +25,7 @@ FeesBolt.prototype.constructor = FeesBolt;
 FeesBolt.prototype.process = function(tup, done) {
   var self = this;
   var feeSummary = tup.values[0];
+  console.log(feeSummary, '--------------- feeSummary FeesBolt.prototype.process')
 
   self.fees.handleFeeSummary(feeSummary)
   .catch(function(e) {

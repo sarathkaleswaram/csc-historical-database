@@ -29,6 +29,8 @@ PaymentsBolt.prototype.process = function(tup, done) {
   var p = tup.values[0];
   var key = tup.values[1];
 
+  console.log(p, '---------p', key,  '--------------- key PaymentsBolt process')
+
   if (!currencies[key]) {
     currencies[key] = new Aggregation({
       currency: p.currency,

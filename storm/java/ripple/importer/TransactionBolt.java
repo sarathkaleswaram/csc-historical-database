@@ -15,6 +15,7 @@ public class TransactionBolt extends ShellBolt implements IRichBolt {
 
   @Override
   public void declareOutputFields(OutputFieldsDeclarer declarer) {
+    System.out.println("declareOutputFields ------------------------------------ TransactionBolt ");
     declarer.declareStream("HDFS_txStream",  new Fields("hdfs_tx"));
     declarer.declareStream("paymentsAggregation",  new Fields("payment", "key"));
     declarer.declareStream("exchangeAggregation", new Fields("exchange", "pair"));

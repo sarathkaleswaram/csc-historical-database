@@ -15,6 +15,7 @@ public class StatsBolt extends ShellBolt implements IRichBolt {
 
   @Override
   public void declareOutputFields(OutputFieldsDeclarer declarer) {
+    System.out.println("declareOutputFields ------------------------------------ StatsBolt ");
   }
 
   @Override

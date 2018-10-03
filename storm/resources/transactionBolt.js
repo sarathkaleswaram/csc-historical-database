@@ -31,6 +31,7 @@ TransactionBolt.prototype.process = function(tup, done) {
   var self = this
   var tx = tup.values[0]
   var parsed
+  console.log(tx, '----------- tx TransactionBolt process ')
 
   // set 'client' string
   tx.client = Parser.fromClient(tx)
@@ -128,6 +129,7 @@ TransactionBolt.prototype.processStreams = function(parsed, id) {
           '/' + exchange.counter.currency +
           (exchange.counter.issuer ? '.' + exchange.counter.issuer : '')
 
+      console.log(exchange, pair, '----------- exchange, pair TransactionBolt emit ')
       self.emit({
         tuple: [exchange, pair],
         anchorTupleId: id,

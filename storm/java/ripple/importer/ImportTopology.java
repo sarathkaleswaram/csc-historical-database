@@ -62,14 +62,15 @@ public class ImportTopology {
     if (args != null && args.length > 0) {
       conf.setNumWorkers(w_count);
       conf.setMessageTimeoutSecs(timeout);
+      System.out.println("StormSubmitter ------------------------------------ ImportTopology ");
       StormSubmitter.submitTopologyWithProgressBar(args[0], conf, builder.createTopology());
 
     } else {
       LocalCluster cluster = new LocalCluster();
       try {
         conf.setDebug(false);
+        System.out.println("LocalCluster ------------------------------------ ImportTopology ");
         cluster.submitTopology("ledger-import", conf, builder.createTopology());
-        System.out.println(" ledger-import ------------------------------------");
         Thread.sleep(10000);
       } catch (Exception e) {
           e.printStackTrace();

@@ -15,6 +15,7 @@ public class FeesBolt extends ShellBolt implements IRichBolt {
 
   @Override
   public void declareOutputFields(OutputFieldsDeclarer declarer) {
+    System.out.println("declareOutputFields ------------------------------------ FeesBolt ");
   }
 
   @Override

@@ -29,6 +29,7 @@ AccountPaymentsBolt.prototype.process = function(tup, done) {
     data    : tup.values[0],
     account : tup.values[1]
   }
+  console.log(payment, '--------------- payment AccountPaymentsBolt process')
 
   //self.log(JSON.stringify(payment));
   self.payments.add(payment);

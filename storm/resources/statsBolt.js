@@ -29,6 +29,7 @@ StatsBolt.prototype.process = function(tup, done) {
     data  : tup.values[0],
     label : tup.values[1]
   }
+  console.log(stat, '--------------- stat StatsBolt process')
 
   //self.log(JSON.stringify(stat));
   self.stats.update(stat);
