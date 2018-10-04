@@ -35,11 +35,7 @@ function getNlexch(currency) {
     var c = currency
 
     start.moment.subtract(1, 'days')
-    var url = 'https://poloniex.com/public?' +
-        'command=returnChartData&currencyPair=' +
-        currency + '_XRP&period=300' +
-        '&start=' + start.moment.unix() +
-        '&end=' + end.moment.unix()
+    var url = 'https://www.nlexch.com//api/v2/tickers/cscbtc'
 
     if (c === 'USDT') {
         c = 'USD'
