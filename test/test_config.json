@@ -5,13 +5,13 @@
     "prefix": "",
     "servers": [
       {
-        "host": "hbase",
+        "host": "",
         "port": 9090
       }
     ]
   },
   "hbase-rest": {
-    "host": "hbase",
+    "host": "",
     "port": 8080
   },
   "ripple": {
@@ -25,6 +25,6 @@
     "blacklist": ["1.1.1.1","2.2.2.2"]
   },
   "redis": {
-    "host": "redis"
+    "host": ""
   }
 }
