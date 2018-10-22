@@ -11,7 +11,7 @@
     ]
   },
   "hbase-rest": {
-    "host": "test_",
+    "host": "",
     "port": 8080
   },
   "ripple": {
