@@ -151,17 +151,17 @@ function generateMap(url) {
         action: 'Get Validator',
         route: '/v2/network/validators/{:pubkey}',
         example: url + '/network/validators/' +
-        'n949f75evCHwgyP4fPVgaHqNHxUVN15PsJEZ3B3HnXPcPjcZAoy7'
+        'n9LgCGUb2umUmi9PmvxCzLxW7iWj3M9uAbAtZExRtFTGhUXsH3xt'
       }, {
         action: 'Get Validator Validations',
         route: '/v2/network/validators/{:pubkey}/validations',
         example: url + '/network/validators/' +
-        'n949f75evCHwgyP4fPVgaHqNHxUVN15PsJEZ3B3HnXPcPjcZAoy7/validations'
+        'n9LgCGUb2umUmi9PmvxCzLxW7iWj3M9uAbAtZExRtFTGhUXsH3xt/validations'
       }, {
         action: 'Get Validator Reports',
         route: '/v2/network/validators/{:pubkey}/reports',
         example: url + '/network/validators/' +
-          'n949f75evCHwgyP4fPVgaHqNHxUVN15PsJEZ3B3HnXPcPjcZAoy7/reports'
+          'n9LgCGUb2umUmi9PmvxCzLxW7iWj3M9uAbAtZExRtFTGhUXsH3xt/reports'
       }, {
         action: 'Get Validator Reports',
         route: '/v2/network/validator_reports',
