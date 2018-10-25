@@ -1,12 +1,8 @@
 'use strict'
 
 var config = require('../config')
-var request = require('request')
 var Promise = require('bluebird')
 var assert = require('assert')
-var moment = require('moment')
-var smoment = require('../lib/smoment')
-var utils = require('./utils')
 
 var hbase = require('../lib/hbase')
 var geolocation = require('../lib/validations/geolocation')
@@ -15,6 +11,10 @@ var mockTopologyInfo = require('./mock/topology-info-crawls-csc.json')
 var mockTopologyNodes = require('./mock/topology-nodes-crawl_node_stats-csc.json')
 
 var now = Date.now()
+var geo = geolocation({
+    table: config.get('hbase:prefix') + 'node_state',
+    columnFamily: 'd'
+})
 
 describe('setup mock data', function () {
     it('load data into hbase', function (done) {
@@ -25,7 +25,7 @@ describe('setup mock data', function () {
 
         // mockTopologyNodes[0].rowkey = range + '+' + parts[1]
         // mockTopologyInfo[0].rowkey = range
-        
+
         mockTopologyInfo.forEach(function (r) {
             rows.push(hbase.putRow({
                 table: 'crawls',
@@ -47,8 +47,17 @@ describe('setup mock data', function () {
         })
     })
 
-    it('import rippled versions', function () {
-        this.timeout(5000)
-        return saveVersions(hbase)
+    it('should update node geolocation', function(done) {
+        this.timeout(5000)    
+        geo.geolocateNodes()
+        .then(done)
+        .catch(e => {
+          assert.ifError(e)
+        })
     })
+
+    // it('import rippled versions', function () {
+    //     this.timeout(5000)
+    //     return saveVersions(hbase)
+    // })
 })
