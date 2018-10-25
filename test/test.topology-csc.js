@@ -11,19 +11,42 @@ var utils = require('./utils')
 var hbase = require('../lib/hbase')
 var geolocation = require('../lib/validations/geolocation')
 var saveVersions = require('../scripts/saveVersions')
-var mockTopologyInfo = require('./mock/topology-info-csc.json')
+var mockTopologyInfo = require('./mock/topology-info-crawls-csc.json')
+var mockTopologyNodes = require('./mock/topology-nodes-crawl_node_stats-csc.json')
 
-var geo = geolocation({
-    table: config.get('hbase:prefix') + 'node_state',
-    columnFamily: 'd'
-})
+var mockTopologyLinks = require('./mock/topology-links.json')
+
+var now = Date.now()
 
 describe('setup mock data', function () {
     it('load data into hbase', function (done) {
         var rows = []
+
+        var parts = mockTopologyNodes[0].rowkey.split('+')
+        console.log(parts, '-------------------parts')
+        var range = now + '_' + now
+        console.log(range, '-------------------range')
+
+        mockTopologyNodes[0].rowkey = range + '+' + parts[1]
+        console.log(mockTopologyNodes[0].rowkey, '-------------------mockTopologyNodes[0].rowkey')
+        parts = mockTopologyLinks[0].rowkey.split('+')
+        console.log(parts, '-------------------parts')
+        mockTopologyLinks[0].rowkey = range + '+' + parts[1]
+        console.log(mockTopologyLinks[0].rowkey, '-------------------mockTopologyLinks[0].rowkey')
+        mockTopologyInfo[0].rowkey = range
+        console.log(mockTopologyInfo[0].rowkey, '-------------------mockTopologyInfo[0].rowkey')
+        
         mockTopologyInfo.forEach(function (r) {
             rows.push(hbase.putRow({
                 table: 'crawls',
+                rowkey: r.rowkey,
+                columns: r
+            }))
+        })
+
+        mockTopologyNodes.forEach(function (r) {
+            rows.push(hbase.putRow({
+                table: 'crawl_node_stats',
                 rowkey: r.rowkey,
                 columns: r
             }))
@@ -33,8 +56,9 @@ describe('setup mock data', function () {
             done()
         })
     })
+
     it('import rippled versions', function () {
-        this.timeout(10000)
+        this.timeout(1000)
         return saveVersions(hbase)
     })
 })
