@@ -14,27 +14,17 @@ var saveVersions = require('../scripts/saveVersions')
 var mockTopologyInfo = require('./mock/topology-info-crawls-csc.json')
 var mockTopologyNodes = require('./mock/topology-nodes-crawl_node_stats-csc.json')
 
-var mockTopologyLinks = require('./mock/topology-links.json')
-
 var now = Date.now()
 
 describe('setup mock data', function () {
     it('load data into hbase', function (done) {
         var rows = []
 
-        var parts = mockTopologyNodes[0].rowkey.split('+')
-        console.log(parts, '-------------------parts')
-        var range = now + '_' + now
-        console.log(range, '-------------------range')
+        // var parts = mockTopologyNodes[0].rowkey.split('+')
+        // var range = now + '_' + now
 
-        mockTopologyNodes[0].rowkey = range + '+' + parts[1]
-        console.log(mockTopologyNodes[0].rowkey, '-------------------mockTopologyNodes[0].rowkey')
-        parts = mockTopologyLinks[0].rowkey.split('+')
-        console.log(parts, '-------------------parts')
-        mockTopologyLinks[0].rowkey = range + '+' + parts[1]
-        console.log(mockTopologyLinks[0].rowkey, '-------------------mockTopologyLinks[0].rowkey')
-        mockTopologyInfo[0].rowkey = range
-        console.log(mockTopologyInfo[0].rowkey, '-------------------mockTopologyInfo[0].rowkey')
+        // mockTopologyNodes[0].rowkey = range + '+' + parts[1]
+        // mockTopologyInfo[0].rowkey = range
         
         mockTopologyInfo.forEach(function (r) {
             rows.push(hbase.putRow({
@@ -58,7 +48,7 @@ describe('setup mock data', function () {
     })
 
     it('import rippled versions', function () {
-        this.timeout(1000)
+        this.timeout(5000)
         return saveVersions(hbase)
     })
 })
