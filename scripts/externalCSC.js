@@ -11,7 +11,8 @@ var timeout = 8000
 var markets = [
     'NLExch|CSC|BTC',
     'BitFlip|CSC|BTC',
-    'CFinex|CSC|BTC'
+    'STEX|CSC|BTC',
+    'NUEX|CSC|BTC'
   ]
 /**
  * round
