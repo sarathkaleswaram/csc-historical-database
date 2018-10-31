@@ -17,12 +17,21 @@ importer.liveStream();
 
 log.info('Saving Ledgers to HBase');
 
-importer.on('ledger', function(ledger) {
+// importer.on('ledger', function(ledger) {
+//   hbase.saveLedger(ledger, function(err, resp) {
+//     if (err) {
+//       log.error(err);
+//     }
+//   });
+// });
+
+
+var brm = require('./brm-transaction.json');
+
+brm.forEach(ledger => {
   hbase.saveLedger(ledger, function(err, resp) {
     if (err) {
       log.error(err);
     }
   });
 });
-
-
