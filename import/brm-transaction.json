@@ -133,6 +133,7 @@
                 "Account": "cHb9CJAWyB4cj91VRWn96DkukG4bwdtyTh",
                 "Amount": "1000000000",
                 "Destination": "cp93ZUpjKtebPrjvFUdx8hpmUJHQw29Afp",
+                "kyc_transaction": true,
                 "Fee": "2000000",
                 "Flags": 2147483648,
                 "LastLedgerSequence": 200019,
