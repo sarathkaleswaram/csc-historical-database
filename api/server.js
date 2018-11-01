@@ -93,6 +93,7 @@ function Server(options) {
   app.get('/v2/network/rippled_versions', routes.network.getVersions)
   app.get('/v2/last_validated', routes.getLastValidated)
   app.get('/v2/transactions/', routes.getTransactions)
+  app.get('/v2/kyc/transactions/', routes.getKycTransactions)
   app.get('/v2/transactions/:tx_hash', routes.getTransactions)
   app.get('/v2/ledgers/:ledger_param?', routes.getLedger)
   app.get('/v2/ledgers/:ledger_hash/validations',

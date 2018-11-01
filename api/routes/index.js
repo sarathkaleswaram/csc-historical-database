@@ -4,6 +4,7 @@ var Routes = { }
 
 Routes.getLedger = require('./getLedger')
 Routes.getTransactions = require('./getTransactions')
+Routes.getKycTransactions = require('./getKycTransactions')
 Routes.accountTxSeq = require('./accountTxSeq')
 Routes.accountTransactions = require('./accountTransactions')
 Routes.accountExchanges = require('./accountExchanges')
