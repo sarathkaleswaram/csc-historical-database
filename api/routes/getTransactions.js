@@ -81,7 +81,8 @@ var getTransactions = function (req, res, next) {
       errorResponse({error: 'invalid hash', code:400});
       return;
     }
-
+    
+    options.include_ledger_hash = true;
     log.info(options.tx_hash);
     hbase.getTransaction(options, function(err, tx) {
       if (err) {
